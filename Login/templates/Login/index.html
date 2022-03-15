@@ -1,0 +1,10 @@
+{% extends 'Login/base.html' %}
+
+{% block content%}
+<form action="" method="post">
+    {% csrf_token %}
+    <div>
+       <p> Chào mừng bạn đã đăng nhập thành công và đến với trang chủ</p>
+    </div>
+</form>
+{% endblock %}

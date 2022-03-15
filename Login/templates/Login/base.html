@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ</title>
+</head>
+<body>
+    <div>
+        <p><a href="{% url 'Login:index' %}">Trang chủ</a></p>
+        <p><a href="#">Mở sổ tiết kiệm</a></p>
+        <p><a href="#">Lập phiếu gửi tiền</a></p>
+        <p><a href="#">Lập phiếu rút tiền</a></p>
+        <p><a href="#">Thay đổi quy định</a></p>
+    </div>
+    {% block content%}
+    {% endblock %}
+    <a href="{% url 'Login:Logout' %}">Đăng xuất</a>
+</body>
+</html>
