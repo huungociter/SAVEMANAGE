@@ -4,9 +4,10 @@ from django.views import View
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import content_form
+from .forms import content_form, registerForm
 from django.contrib import messages
 from .models import content
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -18,7 +19,7 @@ class Login(View):
         password = request.POST.get('psw')
         user = authenticate(request,username = username,password = password)
         if user is None:
-            messages.success(request, "Errorr." )
+            messages.success(request, ("Username or password not exactly"))
             return render(request,'Login/login.html')
         else:
             login(request, user)
@@ -40,3 +41,20 @@ class index(LoginRequiredMixin, View):
 def Logout(request):
     logout(request)
     return redirect('Login:Login')
+
+class registerUser(View):
+    def get(self, request):
+        rF = registerForm
+        return render(request,'Login/register.html', {'rF': rF})
+    def post(self, request):
+        uname = request.POST['username']
+        email = request.POST['email']
+        pwd = request.POST['password']
+        u = User.objects.get(username=uname)
+        if u is not None:
+            return HttpResponse(u)
+        user = User.objects.create_user(uname,email, pwd)
+        user.last_name = 'Ho'
+        user.first_name = 'Ngoc'
+        user.save()
+        return redirect('Login:Login')
