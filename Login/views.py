@@ -19,7 +19,7 @@ class Login(View):
         password = request.POST.get('psw')
         user = authenticate(request,username = username,password = password)
         if user is None:
-            messages.success(request, ("Username or password not exactly"))
+            messages.success(request, ("Username or password not exactly. Please try again..."))
             return render(request,'Login/login.html')
         else:
             login(request, user)
@@ -50,11 +50,9 @@ class registerUser(View):
         uname = request.POST['username']
         email = request.POST['email']
         pwd = request.POST['password']
-        u = User.objects.get(username=uname)
-        if u is not None:
-            return HttpResponse(u)
         user = User.objects.create_user(uname,email, pwd)
         user.last_name = 'Ho'
         user.first_name = 'Ngoc'
+        messages.success(request, ("Register successfully. Please login..."))
         user.save()
         return redirect('Login:Login')
